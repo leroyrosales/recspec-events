@@ -7,15 +7,25 @@ add_shortcode( 'recspec_events', 'recspec_events_query_events' );
 function recspec_events_query_events() {
 	ob_start();
 
+	global $paged;
+
 	// Get the current date
 	$date_now = gmdate( 'Y-m-d H:i:s' );
 	$time_now = strtotime( $date_now );
+	if ( get_query_var( 'paged' ) ) {
+		$paged = get_query_var( 'paged' );
+	} elseif ( get_query_var( 'page' ) ) {
+		$paged = get_query_var( 'page' );
+	} else {
+		$paged = 1;
+	}
 
 	$date_args = array(
 		'post_type'      => 'events',
 		'meta_key'       => 'event_start_time',
 		'orderby'        => 'meta_value_num',
 		'order'          => 'ASC',
+		'paged' => $paged,
 		'meta_query'     => array(
 			array(
 				'key'     => 'event_start_time',
@@ -57,7 +67,12 @@ function recspec_events_query_events() {
 
 			echo '</li>';
 		endwhile;
-	echo '</ul>';
+	echo '</ul>'; ?>
+
+	<div class="nav-previous alignleft"><?php previous_posts_link( 'Older events' ); ?></div>
+	<div class="nav-next alignright"><?php next_posts_link( 'Newer events', $date_query->max_num_pages ); ?></div>
+
+	<?php
 	wp_reset_postdata();
 
 	return ob_get_clean();
