@@ -1,0 +1,39 @@
+.recspec-events h3 {
+    margin: 0;
+}
+
+.recspec-events--event {
+    display: grid;
+    gap: 1rem;
+    border-bottom: 1px solid white;
+    padding: 1.5rem 0;
+    grid-template-columns: 1fr;
+}
+
+.recspec-events--event .information {
+    padding-bottom: 1rem;
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    line-height: 1;
+}
+
+.recspec-events--event img {
+    width: 100%;
+}
+
+.recspec-events--nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 0;
+}
+
+@media screen and (min-width: 768px) {
+    .recspec-events--event.has-img {
+        grid-template-columns: 35% 65%;
+    }
+    .recspec-events--event .information,
+    .recspec-events--event .information time {
+        flex-direction: row;
+    }
+}
